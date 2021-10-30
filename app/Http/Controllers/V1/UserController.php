@@ -13,13 +13,14 @@ class UserController extends Controller
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $data = [
-            'email' => $request['nickname'],
+            'nickname' => $request['nickname'],
             'password' => $request['password']
         ];
 
         if (auth()->attempt($data)) {
             $token = auth()->user()->createToken('Laravel8Auth')->accessToken;
-            return response()->json(['token' => $token], 200);
+            $user = auth()->user();
+            return response()->json(['token' => $token, 'user' => $user], 200);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
