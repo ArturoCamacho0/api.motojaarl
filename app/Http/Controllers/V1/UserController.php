@@ -44,16 +44,17 @@ class UserController extends Controller
             return response()->json($validate->errors()->all(), 400);
         }
 
-        $data = $request->only('name', 'email', 'nickname', 'password');
+        $data = $request->only('name', 'email', 'nickname', 'password', 'role');
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'nickname' => $data['nickname'],
             'password' => bcrypt($data['password']),
+            'role' => $data['role'] ? 'ADMIN' : 'USER'
         ]);
 
         $token = $user->createToken('Laravel8Auth')->accessToken;
-        $user->assignRole('user');
+        isset($data['role']) ? $user->assignRole('admin') : $user->assignRole('user');
 
         return response()->json(['token' => $token], 201);
     }

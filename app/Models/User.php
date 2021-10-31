@@ -28,4 +28,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Has many
+    public function outgoings(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Outgoing::class);
+    }
+
+    public function customer_sales(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CustomerSale::class);
+    }
+
+    public function sales(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    // Many to many
+    public function phones(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Phone::class, 'phones_users');
+    }
 }
