@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // Many to one
-    public function provider(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Provider::class);
-    }
+	// Many to one
+	public function provider(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	{
+		return $this->belongsTo(Provider::class);
+	}
 
-    // Many to many
-    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Product::class, 'products_purchases');
-    }
+	// Many to many
+	public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Product::class, 'products_purchases');
+	}
 }

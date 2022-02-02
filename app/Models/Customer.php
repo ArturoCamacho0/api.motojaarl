@@ -7,28 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // Many to one
-    public function customer_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(CustomerType::class);
-    }
+	// Many to one
+	public function customer_type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	{
+		return $this->belongsTo(CustomerType::class);
+	}
 
-    public function business(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Business::class);
-    }
+	public function business(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	{
+		return $this->belongsTo(Business::class);
+	}
 
-    // One to many
-    public function customer_sales(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CustomerSale::class);
-    }
+	// One to many
+	public function customer_sales(): \Illuminate\Database\Eloquent\Relations\HasMany
+	{
+		return $this->hasMany(CustomerSale::class);
+	}
 
-    // Many to many
-    public function phones(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Phone::class, 'phones_customers');
-    }
+	// Many to many
+	public function phones(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Phone::class, 'phones_customers');
+	}
 }

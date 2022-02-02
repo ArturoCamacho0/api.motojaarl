@@ -6,22 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateProductsTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('products', function (Blueprint $table) {
-            $table->string('key', 30)->primary();
-            $table->string('name', 100);
-            $table->text('description');
-            $table->mediumInteger('stock');
-            $table->tinyInteger('minimum');
-            $table->timestamps();
+	public function up()
+	{
+		Schema::create('products', function (Blueprint $table) {
+			$table->string('key', 30)->primary();
+			$table->string('name', 100);
+			$table->text('description');
+			$table->mediumInteger('stock');
+			$table->tinyInteger('minimum');
+			$table->timestamps();
 
-            $table->foreignId('category_id')->constrained('categories');
-        });
-    }
+			$table->foreignId('category_id')->constrained('categories');
+		});
+	}
 
-    public function down()
-    {
-        Schema::dropIfExists('products');
-    }
+	public function down()
+	{
+		Schema::dropIfExists('products');
+	}
 }

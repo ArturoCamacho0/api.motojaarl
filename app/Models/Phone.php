@@ -7,21 +7,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // Many to many
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'phones_users');
-    }
+	protected $fillable = [
+		'name'
+	];
 
-    public function providers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Provider::class, 'phones_providers');
-    }
+	// Many to many
+	public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(User::class, 'phones_users');
+	}
 
-    public function customers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Customer::class, 'phones_customers');
-    }
+	public function providers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Provider::class, 'phones_providers');
+	}
+
+	public function customers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Customer::class, 'phones_customers');
+	}
 }

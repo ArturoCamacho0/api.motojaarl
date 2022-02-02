@@ -7,17 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Direction extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // One to many
-    public function providers(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Provider::class);
-    }
+	protected $fillable = [
+		'street',
+		'number',
+		'state',
+		'cp'
+	];
 
-    // Many to manu
-    public function business(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Business::class, 'directions_business');
-    }
+	// One to many
+	public function providers(): \Illuminate\Database\Eloquent\Relations\HasMany
+	{
+		return $this->hasMany(Provider::class);
+	}
+
+	// Many to many
+	public function business(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Business::class, 'directions_business');
+	}
 }

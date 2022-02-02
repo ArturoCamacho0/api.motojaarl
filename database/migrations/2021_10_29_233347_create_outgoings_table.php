@@ -6,19 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateOutgoingsTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('outgoings', function (Blueprint $table) {
-            $table->id();
-            $table->string('concept');
-            $table->timestamps();
+	public function up()
+	{
+		Schema::create('outgoings', function (Blueprint $table) {
+			$table->id();
+			$table->string('concept');
+			$table->float('amount');
+			$table->timestamps();
 
-            $table->foreignId('user_id')->constrained('users');
-        });
-    }
+			$table->foreignId('user_id')->constrained('users');
+		});
+	}
 
-    public function down()
-    {
-        Schema::dropIfExists('outgoings');
-    }
+	public function down()
+	{
+		Schema::dropIfExists('outgoings');
+	}
 }

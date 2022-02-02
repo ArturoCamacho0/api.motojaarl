@@ -6,17 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateCustomerTypesTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('customer_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50);
-            $table->timestamps();
-        });
-    }
+	public function up()
+	{
+		Schema::create('customer_types', function (Blueprint $table) {
+			$table->id();
+			$table->string('name', 50);
+			$table->timestamps();
+		});
+	}
 
-    public function down()
-    {
-        Schema::dropIfExists('customer_types');
-    }
+	public function down()
+	{
+		Schema::dropIfExists('customer_types');
+	}
 }

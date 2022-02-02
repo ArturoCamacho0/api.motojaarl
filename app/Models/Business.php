@@ -7,17 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Business extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // One to many
-    public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Customer::class);
-    }
+	protected $table = 'business';
 
-    // Many to many
-    public function directions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Direction::class, 'directions_business');
-    }
+	protected $fillable = [
+		'name'
+	];
+
+	// One to many
+	public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
+	{
+		return $this->hasMany(Customer::class);
+	}
+
+	// Many to many
+	public function directions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Direction::class, 'directions_business');
+	}
 }

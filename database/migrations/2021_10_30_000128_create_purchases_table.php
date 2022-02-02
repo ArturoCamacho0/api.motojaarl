@@ -6,29 +6,29 @@ use Illuminate\Support\Facades\Schema;
 
 class CreatePurchasesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('purchases', function (Blueprint $table) {
-            $table->id();
-            $table->float('total');
-            $table->timestamps();
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('purchases', function (Blueprint $table) {
+			$table->id();
+			$table->float('total');
+			$table->timestamps();
 
-            $table->foreignId('provider_id')->constrained('providers');
-        });
-    }
+			$table->foreignId('provider_id')->constrained('providers');
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('purchases');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('purchases');
+	}
 }

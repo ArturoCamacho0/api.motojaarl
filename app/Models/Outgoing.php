@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Outgoing extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
+	protected $fillable = [
+		'concept',
+		'amount',
+		'user_id'
+	];
+
+	public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	{
+		return $this->belongsTo(User::class);
+	}
 }

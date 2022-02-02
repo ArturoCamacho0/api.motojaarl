@@ -6,20 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSalesTable extends Migration
 {
-    public function up()
-    {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->id();
-            $table->float('total');
-            $table->float('discount');
-            $table->timestamps();
+	public function up()
+	{
+		Schema::create('sales', function (Blueprint $table) {
+			$table->id();
+			$table->float('total');
+			$table->float('discount');
+			$table->timestamps();
 
-            $table->foreignId('user_id')->constrained('users');
-        });
-    }
+			$table->foreignId('user_id')->constrained('users');
+		});
+	}
 
-    public function down()
-    {
-        Schema::dropIfExists('sales');
-    }
+	public function down()
+	{
+		Schema::dropIfExists('sales');
+	}
 }

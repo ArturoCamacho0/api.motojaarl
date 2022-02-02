@@ -7,23 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Provider extends Model
 {
-    use HasFactory;
+	use HasFactory;
 
-    // Many to one
-    public function direction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Direction::class);
-    }
+	// Many to one
+	public function direction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+	{
+		return $this->belongsTo(Direction::class);
+	}
 
-    // One to many
-    public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Purchase::class);
-    }
+	// One to many
+	public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+	{
+		return $this->hasMany(Purchase::class);
+	}
 
-    // Many to many
-    public function phones(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Phone::class, 'phones_providers');
-    }
+	// Many to many
+	public function phones(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+	{
+		return $this->belongsToMany(Phone::class, 'phones_providers');
+	}
 }
