@@ -53,4 +53,8 @@ class CategoryController extends Controller
 
 		return response()->json(['message' => 'The category has been deleted'], 200);
 	}
+
+	public function search($term){
+		return Category::where('name', 'LIKE', '%'.$term.'%')->get();
+	}
 }

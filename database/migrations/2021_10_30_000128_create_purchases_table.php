@@ -18,7 +18,9 @@ class CreatePurchasesTable extends Migration
 			$table->float('total');
 			$table->timestamps();
 
-			$table->foreignId('provider_id')->constrained('providers');
+			$table->foreignId('provider_id')->nullable()
+				->constrained('providers')
+				->onDelete('set null');
 		});
 	}
 

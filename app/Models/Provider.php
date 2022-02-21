@@ -9,6 +9,12 @@ class Provider extends Model
 {
 	use HasFactory;
 
+	protected $fillable = [
+		'name',
+		'email',
+		'direction_id'
+	];
+
 	// Many to one
 	public function direction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
 	{

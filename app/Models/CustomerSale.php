@@ -9,6 +9,13 @@ class CustomerSale extends Model
 {
 	use HasFactory;
 
+	protected $fillable = [
+		'total',
+		'discount',
+		'user_id',
+		'customer_id',
+	];
+
 	// Many to one
 	public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
 	{

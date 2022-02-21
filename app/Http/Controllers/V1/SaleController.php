@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Sale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,21 +18,45 @@ class SaleController extends Controller
 	public function store(Request $request): \Illuminate\Http\JsonResponse
 	{
 		$validate = validator($request->only([
-			'total' => 'required|number',
-			'discount' => 'number',
-			'user_id' => 'number|required'
+			'products' => 'required|array',
+			'quantity' => 'required|integer',
+			'total' => 'required|numeric',
+			'user_id' => 'required|integer',
 		]));
 
 		if ($validate->fails())
 			return response()->json($validate->errors(), 400);
 
 		$sale = Sale::create($request->only([
+			'quantity',
 			'total',
-			'discount',
-			'user_id'
+			'user_id',
 		]));
 
-		return response()->json($sale, 201);
+		foreach ($request['products'] as $product) {
+			$validate = validator($product, [
+				'key' => 'required|string',
+				'returned' => 'boolean',
+				'quantity' => 'required|integer',
+			]);
+
+			$sale_get = Sale::findOrFail($sale->id);
+
+			$sale_get->products()->attach($product['key'],
+				[
+					'sale_id' => $sale->id,
+					'product_key' => $product['key'],
+					'quantity' => $product['quantity'],
+					'total' => $product['price'] * $product['quantity'],
+					'returned' => $product['returned'],
+				]
+			);
+		}
+
+
+		return response()->json([
+			"message" => "Sale created successfully",
+		], 201);
 	}
 
 	public function show($id)
@@ -118,5 +143,17 @@ class SaleController extends Controller
 		$sale = Sale::whereBetween('created_at', [$start, $end])->sum('total');
 
 		return response()->json($sale, 200);
+	}
+
+	public function getProductsBestSeller(){
+		$products = Product::all();
+		$products_sold = [];
+		foreach($products as $product){
+			$products_sold[$product->id] = $product->sales()->sum('quantity');
+		}
+		arsort($products_sold);
+		$products_sold = array_slice($products_sold, 0, 5);
+		$products_sold = array_keys($products_sold);
+		return Product::whereIn('id', $products_sold)->get();
 	}
 }

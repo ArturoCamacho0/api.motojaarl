@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerSale;
+use App\Models\Outgoing;
+use App\Models\Sale;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -54,7 +58,7 @@ class UserController extends Controller
 		$token = $user->createToken('Laravel8Auth')->accessToken;
 		isset($data['role']) ? $user->assignRole('admin') : $user->assignRole('user');
 
-		return response()->json(['token' => $token], 201);
+		return response()->json($user, 201);
 	}
 
 	public function show($id)
@@ -90,4 +94,39 @@ class UserController extends Controller
 
 		return response()->json(['message' => 'The user has been deleted'], 200);
 	}
+
+
+	public function getTotalSalesOfTheDay(): \Illuminate\Http\JsonResponse
+	{
+		$totalSales = 0;
+		$sales = Sale::whereDate('created_at', Carbon::today())->get();
+		$customer_sales = CustomerSale::whereDate('created_at', Carbon::today())->get();
+
+		foreach($sales as $sale)
+		{
+			$totalSales += $sale->total;
+		}
+
+		foreach($customer_sales as $customer_sale)
+		{
+			$totalSales += $customer_sale->total;
+		}
+
+		return response()->json(['total' => $totalSales], 200);
+	}
+
+
+	public function getOutgoingsOfTheDay(): \Illuminate\Http\JsonResponse
+	{
+		$total = 0;
+		$expenses = Outgoing::whereDate('created_at', Carbon::today())->get();
+
+		foreach($expenses as $expense)
+		{
+			$total += $expense->amount;
+		}
+
+		return response()->json(['outgoings' => $total], 200);
+	}
+
 }

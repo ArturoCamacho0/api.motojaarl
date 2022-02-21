@@ -14,8 +14,12 @@ class CreatePhonesProvidersTable extends Migration
 	public function up()
 	{
 		Schema::create('phones_providers', function (Blueprint $table) {
-			$table->foreignId('provider_id')->constrained('providers');
-			$table->foreignId('phone_id')->constrained('phones');
+			$table->foreignId('provider_id')
+				->constrained('providers')
+				->onDelete('cascade');
+			$table->foreignId('phone_id')->nullable()
+				->constrained('phones')
+				->onDelete('set null');
 			$table->string('phone_number', 12);
 		});
 	}

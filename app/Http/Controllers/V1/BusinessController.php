@@ -16,12 +16,28 @@ class BusinessController extends Controller
 	public function store(Request $request): \Illuminate\Http\JsonResponse
 	{
 		$validate = validator($request->only('name'), [
-			'name' => 'required|string'
+			'name' => 'required|string',
+			'directions' => 'array',
 		]);
 
 		if ($validate->fails()) return response()->json($validate->errors(), 400);
 
 		$business = Business::create($request->only('name'));
+
+		if ($request->has('directions')) {
+			foreach ($request['directions'] as $direction) {
+				$validate = validator($request->only('directions'), [
+					'direction_id' => 'required|integer|exists:directions,id',
+				]);
+
+				$business_get = Business::where('id', $business->id)->first();
+
+				$business_get->directions()->attach($direction['id'], [
+					'direction_id' => $direction['id'],
+					'business_id' => $business->id
+				]);
+			}
+		}
 
 		return response()->json($business, 201);
 	}
@@ -52,5 +68,17 @@ class BusinessController extends Controller
 		$business->delete();
 
 		return response()->json(['message' => 'The business has been deleted'], 200);
+	}
+
+	public function getDirections($id)
+	{
+		return Business::findOrFail($id)->directions;
+	}
+
+	public function deleteDirection($id, $direction_id): \Illuminate\Http\JsonResponse
+	{
+		$business = Business::findOrFail($id);
+		$business->directions()->detach($direction_id);
+		return response()->json(['message' => 'The direction has been deleted'], 200);
 	}
 }

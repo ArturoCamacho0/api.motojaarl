@@ -14,8 +14,13 @@ class CreateDirectionsBusinessTable extends Migration
 	public function up()
 	{
 		Schema::create('directions_business', function (Blueprint $table) {
-			$table->foreignId('direction_id')->constrained('directions');
-			$table->foreignId('business_id')->constrained('business');
+			$table->foreignId('direction_id')->nullable()
+				->constrained('directions')
+				->onDelete('set null');
+
+			$table->foreignId('business_id')->nullable()
+				->constrained('business')
+				->onDelete('set null');
 		});
 	}
 

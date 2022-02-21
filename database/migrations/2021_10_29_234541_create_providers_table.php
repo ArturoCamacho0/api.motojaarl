@@ -14,7 +14,8 @@ class CreateProvidersTable extends Migration
 			$table->string('email', 100);
 			$table->timestamps();
 
-			$table->foreignId('direction_id')->constrained('directions');
+			$table->foreignId('direction_id')
+				->constrained('directions')->onDelete("set null");
 		});
 	}
 

@@ -9,8 +9,13 @@ class CreatePhonesCustomersTable extends Migration
 	public function up()
 	{
 		Schema::create('phones_customers', function (Blueprint $table) {
-			$table->foreignId('phone_id')->constrained('phones');
-			$table->foreignId('customer_id')->constrained('customers');
+			$table->foreignId('phone_id')->nullable()
+				->constrained('phones')
+				->onDelete('set null');
+
+			$table->foreignId('customer_id')
+				->constrained('customers')
+				->onDelete('cascade');
 			$table->string('phone_number');
 		});
 	}

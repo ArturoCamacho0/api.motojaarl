@@ -9,6 +9,15 @@ class Product extends Model
 {
 	use HasFactory;
 
+	protected $fillable = [
+		'key',
+		'name',
+		'description',
+		'stock',
+		'minimum',
+		'category_id',
+	];
+
 	// Many to one
 	public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsTo
 	{
@@ -18,12 +27,20 @@ class Product extends Model
 	// Many to many
 	public function sales(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	{
-		return $this->belongsToMany(Sale::class, 'sales_products');
+		return $this->belongsToMany(
+			Sale::class,
+			'sales_products',
+			'sale_id',
+			'product_key');
 	}
 
 	public function prices(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	{
-		return $this->belongsToMany(Price::class, 'products_prices');
+		return $this->belongsToMany(
+			Price::class,
+			'products_prices',
+			'price_id',
+			'product_key');
 	}
 
 	public function customer_sales(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

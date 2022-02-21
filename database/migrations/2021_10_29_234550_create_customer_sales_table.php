@@ -19,8 +19,13 @@ class CreateCustomerSalesTable extends Migration
 			$table->float('discount');
 			$table->timestamps();
 
-			$table->foreignId('user_id')->constrained('users');
-			$table->foreignId('customer_id')->constrained('customers');
+			$table->foreignId('user_id')->nullable()
+				->constrained('users')
+				->onDelete('set null');
+
+			$table->foreignId('customer_id')->nullable()
+				->constrained('customers')
+				->onDelete('set null');
 		});
 	}
 

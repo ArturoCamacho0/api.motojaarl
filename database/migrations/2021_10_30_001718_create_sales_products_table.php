@@ -9,9 +9,16 @@ class CreateSalesProductsTable extends Migration
 	public function up()
 	{
 		Schema::create('sales_products', function (Blueprint $table) {
-			$table->foreignId('sale_id')->constrained('sales');
-			$table->string('product_key');
-			$table->foreign('product_key')->references('key')->on('products');
+			$table->foreignId('sale_id')->nullable()
+				->constrained('sales')
+				->onDelete('cascade');
+
+			$table->string('product_key')->nullable();
+			$table->foreign('product_key')
+				->references('key')
+				->on('products')
+				->onDelete('set null')
+				->onUpdate('cascade');
 
 			$table->mediumInteger('quantity');
 			$table->float('total');

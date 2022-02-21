@@ -9,7 +9,7 @@ class CreateProductsTable extends Migration
 	public function up()
 	{
 		Schema::create('products', function (Blueprint $table) {
-			$table->string('key', 30)->primary();
+			$table->string('key', 30)->primary()->default('');
 			$table->string('name', 100);
 			$table->text('description');
 			$table->mediumInteger('stock');

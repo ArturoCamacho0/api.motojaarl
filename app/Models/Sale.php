@@ -24,6 +24,11 @@ class Sale extends Model
 	// Many to many
 	public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
 	{
-		return $this->belongsToMany(Product::class, 'sales_products');
+		return $this->belongsToMany(
+			Product::class,
+			'sales_products',
+			'product_key',
+			'sale_id'
+		);
 	}
 }
